@@ -3,7 +3,7 @@ app = Flask(__name__, template_folder='../templates',
             static_folder = '../static')
 app.Debug = True
 
-import traceback, posts, os, about
+import traceback, os
 
 @app.teardown_request
 def teardown_request_wrap(exception):
@@ -18,4 +18,8 @@ def teardown_request(exception):
 def favicon():
     return send_from_directory(os.path.join(app.root_path, '../static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-        
+
+@app.route('/')
+@app.route('/index.html')
+def index():
+    return render_template('index.html')

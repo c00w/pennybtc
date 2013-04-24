@@ -5,10 +5,17 @@ $test_packages = [
     "python-gevent",
     "python-flask",
     "python-pip",
+    "python-software-properties",
 ]
 
 package { $test_packages:
-    ensure => latest,
+    ensure  => latest,
+    require => Exec["apt_update"],
+}
+
+exec {"/usr/bin/apt-get update && /usr/bin/touch /var/tmp/updated":
+    alias   => "apt_update",
+    creates => "/var/tmp/updated",
 }
 
 exec {"/usr/bin/pip install flask-login":
@@ -53,4 +60,39 @@ service {"web":
     ],
     ensure  => running,
     enable  => true,
+}
+
+
+exec { "/usr/bin/apt-add-repository ppa:chris-lea/redis-server && /usr/bin/apt-get update":
+     alias   => "ppa_redis",
+     require => Package["python-software-properties"],
+     creates => "/etc/apt/sources.list.d/chris-lea-redis-server-precise.list",
+ }
+
+package {"redis-server":
+    require => [
+        Exec["ppa_redis"],
+    ],
+    ensure  => latest,
+}
+
+service {"redis-server":
+    require => [
+        Package["redis-server"],
+        File["/etc/redis/redis.conf"],
+    ],
+    ensure => running,
+    enable => true,
+    hasstatus => true,
+    hasrestart => true,
+}
+
+file {"/etc/redis/redis.conf":
+    alias   => "redis.conf",
+    ensure  => present,
+    mode    => 0644,
+    owner   => root,
+    source  => "/configs/redis.conf",
+    notify  => Service["redis-server"],
+    require => Package["redis-server"]
 }

@@ -54,7 +54,7 @@ def make_user(username, password):
         return False
 
     #No user, create a new user object.
-    user = {'userid':username,
+    user = {'userid':username.encode('utf-8'),
             'salt':str(os.urandom(512/8)).encode("hex"),
            }
 
@@ -62,7 +62,7 @@ def make_user(username, password):
     user['password_hash'] = hash_password(password, user['salt'])
 
     #Store user
-    g.db.set('userid_' + username, user)
+    print g.db.set('userid_' + username, json.dumps(user))
 
     return True
 

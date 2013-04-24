@@ -1,7 +1,6 @@
 from webserver import *
-import hashlib
+import hashlib, json, os
 from recaptcha.client import captcha
-import json
 
 class User():
     def __init__(self, userid):

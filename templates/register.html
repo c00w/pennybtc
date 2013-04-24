@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{%block title %} Register {% endblock %}
+
+{% block body %}
+
+<div id="register_text">
+<!--- <h1> Please Enter Your Details </h1> --->
+</div>
+<div id="register_form">
+<form method="post">
+<label class="register"> Username: </label> 
+<input type="text" name="username" /><br />
+<label class="register"> Password: </label>
+<input type="password" name="password" /><br />
+<script type="text/javascript"
+    src="http://www.google.com/recaptcha/api/challenge?k=6LdcwckSAAAAALUSydqI3hW4xKqtX84QXrXC9xYB">
+</script>
+<noscript>
+    <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LdcwckSAAAAALUSydqI3hW4xKqtX84QXrXC9xYB"
+    height="300" width="500" frameborder="0"></iframe><br>
+    <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+    </textarea>
+    <input type="hidden" name="recaptcha_response_field"
+    value="manual_challenge">
+</noscript>
+<input type="submit" name="register_submit" value="Register" class="submit" />
+</form>
+</div>
+</div>
+{% endblock %}

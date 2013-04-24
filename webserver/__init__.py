@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, send_from_directory, make_response
+from flask import Flask, render_template, abort, send_from_directory, make_response, g
 app = Flask(__name__, template_folder='../templates', 
             static_folder = '../static')
 app.Debug = True
@@ -13,6 +13,10 @@ login_manager.setup_app(app)
 import users, database
 
 import traceback, os
+
+@app.before_request
+def setup_request():
+    g.db = database.get_connection()
 
 @app.teardown_request
 def teardown_request_wrap(exception):

@@ -34,7 +34,7 @@ def check_user(username, password):
     """
     Salts and hashes the password and compares it to the stored one.
     """
-    user = g.get('userid_' + username)
+    user = g.db.get('userid_' + username)
     if not user:
         return False
     else:
@@ -45,12 +45,12 @@ def check_user(username, password):
         return True
     return False
 
-def make_user(username, password, wallet):
+def make_user(username, password):
     """
     Makes a new user
     Returns true on success and false on failure
     """
-    user = g.get('userid_' + username)
+    user = g.db.get('userid_' + username)
     if user:
         return False
 
@@ -63,7 +63,7 @@ def make_user(username, password, wallet):
     user['password_hash'] = hash_password(password, user['salt'])
 
     #Store user
-    g.set('userid_' + username, user)
+    g.db.set('userid_' + username, user)
 
     return True
 
@@ -94,10 +94,10 @@ def register():
             )
 
         #Check for username and passwords
-        if username and password and wallet and response.is_valid:
+        if username and password and response.is_valid:
 
             #Actually do the db mucking
-            ok = make_user(username, password, wallet)
+            ok = make_user(username, password)
             if not ok:
                 return render_template("register.html")
             else:

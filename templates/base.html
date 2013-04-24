@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+    <meta name="google-site-verification" content="82P-GbkbB32JKs6OJ4ElchnmPSy-cEkVDGl1sByTLPY" />
+    <title> btcProxy | {% block title %}{% endblock %} </title>
+    <link rel="stylesheet" type="text/css" href="/static/core.css" />
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26817395-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+    <!-- start Mixpanel --><script type="text/javascript">var mpq=[];mpq.push(["init","c7809be44fa671f5c5dca6a5713521de"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=(document.location.protocol==="https:"?"https:":"http:")+"//api.mixpanel.com/site_media/js/api/mixpanel.js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);e=function(f){return function(){mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))}};d=["init","track","track_links","track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<d.length;c++){mpq[d[c]]=e(d[c])}})();
+</script><!-- end Mixpanel -->
+
+</head>
+
+<body>
+<table id="wrapper_top" class="clean">
+<tr class="clean">
+<td class="clean">
+{% if not logged_in %}
+    <div id="left_top">
+        <div id="login_top" class="TopButton">
+        <a href="/login/"> Login </a>
+        </div>
+    </div>
+
+    <div id="right_top">    
+        <div id="register_top" class="TopButton">
+        <a href="/register/"> Register </a>
+        </div>
+    </div>
+    
+{% else %}
+
+    <div id="left_top">
+        <div id="home_top" class="TopButton">
+        <a href="/user/"> Home </a>
+        </div>
+        <div id="workers_top" class="TopButton">
+        <a href="/user/workers"> Workers </a>
+        </div>
+    </div>
+
+    <div id="right_top">
+        <div id="pools_top" class="TopButton">
+        <a href="/user/pools"> Pools </a>
+        </div>
+        <div id="logout_top" class="TopButton">
+        <a href="/logout/"> Logout </a>
+        </div>
+    </div>
+{% endif %}
+</td>
+</tr>
+</table>
+<br>
+<div id="body">
+{% block body %}
+{% endblock %}
+</div>
+</body>
+
+</html>

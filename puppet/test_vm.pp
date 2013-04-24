@@ -18,12 +18,12 @@ exec {"/usr/bin/apt-get update && /usr/bin/touch /var/tmp/updated":
     creates => "/var/tmp/updated",
 }
 
-exec {"/usr/bin/pip install flask-login":
+exec {"/usr/bin/pip install flask-login recaptcha-client":
     require => [
         Package["python-flask"],
         Package["python-pip"],
     ],
-    alias => "flask-login",
+    alias => "pip",
 }
 
 user {"webserver":
@@ -54,7 +54,7 @@ file {"/etc/init/web.conf":
 
 service {"web":
     require => [
-        Exec["flask-login"],
+        Exec["pip"],
         File["web.conf"],
         File["bp_folder"],
     ],

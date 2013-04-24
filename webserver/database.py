@@ -1,6 +1,6 @@
 import redis
 
-r = redis.StrictRedis(host='localhost', port
+r = redis.StrictRedis(unix_socket_path='/tmp/redis.sock')
 
 def get_connection():
-    return None
+    return r

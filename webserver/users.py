@@ -1,6 +1,7 @@
 from webserver import *
 import hashlib
 from recaptcha.client import captcha
+import json
 
 class User():
     def __init__(self, userid):
@@ -33,10 +34,11 @@ def check_user(username, password):
     """
     Salts and hashes the password and compares it to the stored one.
     """
-    db_users = g.db.users
-    user = db_users.find_one({'userid':username})
+    user = g.get('userid_' + username)
     if not user:
         return False
+    else:
+        user = json.loads(user)
     salt = user['salt']
     salt_password = hash_password(password, salt)
     if salt_password == user['password_hash']:
@@ -48,29 +50,20 @@ def make_user(username, password, wallet):
     Makes a new user
     Returns true on success and false on failure
     """
-    db_users = g.db.users
-    user = db_users.find_one({'userid':username})
+    user = g.get('userid_' + username)
     if user:
         return False
 
     #No user, create a new user object.
-    user = {'userid':username, 
+    user = {'userid':username,
             'salt':str(os.urandom(512/8)).encode("hex"),
-            'wallet':wallet,
-            'servers':{
-                'Donation':{
-                    'workers':[
-                        ['proxydonate','proxydonate']
-                     ]
-                 }
-              }
            }
 
     #hash and store the password
     user['password_hash'] = hash_password(password, user['salt'])
 
     #Store user
-    db_users.insert(user)
+    g.set('userid_' + username, user)
 
     return True
 
@@ -89,7 +82,6 @@ def register():
 
         username = request.form.get('username', None)
         password = request.form.get('password', None)
-        wallet = request.form.get('wallet', None)
         challenge = request.form.get('recaptcha_challenge_field', '')
         response = request.form.get('recaptcha_response_field', '')
 

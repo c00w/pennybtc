@@ -2,6 +2,15 @@ from flask import Flask, render_template, abort, send_from_directory, make_respo
 app = Flask(__name__, template_folder='../templates', 
             static_folder = '../static')
 app.Debug = True
+app.secret_key = '#$%^&%$#%^&^$#%^%$%^&%$^&^%^%^%^ASD'
+
+from flask.ext.login import *
+
+login_manager = LoginManager()
+login_manager.login_view = '/login'
+login_manager.setup_app(app)
+
+import users, database
 
 import traceback, os
 

@@ -18,7 +18,7 @@ exec {"/usr/bin/apt-get update && /usr/bin/touch /var/tmp/updated":
     creates => "/var/tmp/updated",
 }
 
-exec {"/usr/bin/pip install flask-login recaptcha-client":
+exec {"/usr/bin/pip install flask-login recaptcha-client redis":
     require => [
         Package["python-flask"],
         Package["python-pip"],
@@ -42,6 +42,7 @@ file {"/home/webserver/bp":
     recurse => true,
     purge   => true,
     force   => true,
+    notify  => Service["web"],
 }
 
 file {"/etc/init/web.conf":

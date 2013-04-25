@@ -1,4 +1,3 @@
 pennybtc
 ========
-
-pennybtc
+A penny auction for Bitcoins

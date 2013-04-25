@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{%block title %}{% endblock %}
+
+{% block body %}
+<form action="/process_charge" method="POST">
+  <article>
+    <label>
+        <span>Amount is {{ amount_usd }}<span>
+    </label>
+  </article>
+
+  <script
+    src="https://checkout.stripe.com/v2/checkout.js"
+    class="stripe-button"
+    data-key="{{ key }}"
+    data-amount="{{ amount }}"
+    data-name="{{ name }}"
+    data-description="{{ name }}"
+    data-image="">
+  </script>
+</form>
+{% endblock %}

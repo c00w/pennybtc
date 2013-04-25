@@ -18,12 +18,18 @@ exec {"/usr/bin/apt-get update && /usr/bin/touch /var/tmp/updated":
     creates => "/var/tmp/updated",
 }
 
+exec {"/usr/bin/pip install --index-url https://code.stripe.com stripe":
+    require => Package["python-pip"],
+    alias   => "stripe",
+}
+
 exec {"/usr/bin/pip install flask-login recaptcha-client redis":
     require => [
         Package["python-flask"],
         Package["python-pip"],
+        Exec["stripe"],
     ],
-    alias => "pip",
+    alias   => "pip",
 }
 
 user {"webserver":

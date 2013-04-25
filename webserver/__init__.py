@@ -10,7 +10,14 @@ login_manager = LoginManager()
 login_manager.login_view = '/login'
 login_manager.setup_app(app)
 
-import users, database
+import stripe
+stripe_key = {
+    'secret_key': 'Kz1e0xKuxFNFzd69GjaOF4u5UYngO7x9',
+    'publishable_key': 'pk_DYreZeSvWiFetMevdJdyHsBORmzBT',
+}
+
+stripe.api_key = stripe_key['secret_key']
+import users, database, charge
 
 import traceback, os
 

@@ -65,8 +65,8 @@ def make_user(username, password):
     print g.db.set('userid_' + username, json.dumps(user))
 
     #Balances
-    print g.db.set('userid_' + username + 'credit_balance', 1)
-    print g.db.set('userid_' + username + 'btc_balance', 0)
+    print g.db.set('userid_' + username + '_credit_balance', 1)
+    print g.db.set('userid_' + username + '_btc_balance', 0)
 
     return True
 
@@ -120,8 +120,8 @@ def login():
             if check_user(username, password):
                 login_user(User(username))
                 return redirect("/user/")
-    template = {logged_in: (not current_user.is_anonymous())}
-    return render_template("login.html", template)
+
+    return render_template("login.html", logged_in = not current_user.is_anonymous())
 
 @app.route("/logout/")
 @login_required

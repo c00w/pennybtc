@@ -128,3 +128,7 @@ def login():
 def logout():
     logout_user()
     return redirect("/")
+
+@app.route('/user/')
+def user_panel():
+    return render_template('user.html', logged_in = not current_user.is_anonymous())

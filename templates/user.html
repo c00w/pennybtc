@@ -1,0 +1,10 @@
+<!doctype html>
+{% extends "base.html" %}
+
+{% block body %}
+	{% if logged_in %}
+		<h1>{{ current_user.get_id() }}'s stats and controls!</h1>
+	{% else %}
+		<h1>You need to login!</h1>
+	{% endif %}
+{% endblock %}

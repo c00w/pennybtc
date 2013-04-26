@@ -42,4 +42,4 @@ def favicon():
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', logged_in = not current_user.is_anonymous())

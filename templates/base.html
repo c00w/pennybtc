@@ -41,14 +41,22 @@
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
-          </button>
-          {% if not logged_in %}
-            <a class="brand" href="/login/">Login</a>
-          {% else %}
-            <a class="brand" href="/user">{{current_user.get_id()}}</a>
-          {% endif %}
-          <div class="nav-collapse collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/">Bidcoin</a>
+            <div class="nav-collapse collapse">
             <ul class="nav">
+              {% if not logged_in %}
+                <li><a href="/login/">Login</a></li>
+                <li><a href="/register/">Register</a></li>
+              {% else %}
+                <p class="navbar-text pull-left">
+                  <a href="/user/">{{current_user.get_id()}}</a>
+                </p>
+                <li><a href="/logout/">Logout</a></li>
+                <li><a href="/request_charge">Buy Credits</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -60,7 +68,10 @@
 <tr class="clean">
 <td class="clean">
 {% if not logged_in %}
-    <div id="left_top">
+
+
+<!--     still possibly useful but not needed since bootstrap
+<div id="left_top">
         <div id="login_top" class="TopButton">
         <a href="/login/"> Login </a>
         </div>
@@ -70,10 +81,10 @@
         <div id="register_top" class="TopButton">
         <a href="/register/"> Register </a>
         </div>
-    </div>
+    </div> -->
     
 {% else %}
-
+<!-- still possibly useful but not needed since bootstrap
     <div id="left_top">
         <div id="home_top" class="TopButton">
         <a href="/"> Home </a>
@@ -90,7 +101,7 @@
         <div id="logout_top" class="TopButton">
         <a href="/logout/"> Logout </a>
         </div>
-    </div>
+    </div> -->
 {% endif %}
 </td>
 </tr>

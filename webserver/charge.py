@@ -2,7 +2,8 @@ from webserver import *
 
 @app.route('/request_charge', methods=['GET'])
 def request_charge():
-    return render_template('charge.html', key=stripe_key['publishable_key'], amount=500, amount_usd="$5.00", name="retard")
+    return render_template('charge.html', logged_in = not current_user.is_anonymous(), 
+        key=stripe_key['publishable_key'], amount=500, amount_usd="$5.00", name="retard")
 
 
 @app.route('/process_charge', methods=['POST'])
